@@ -6,167 +6,307 @@
 <title>Cintia Makess</title>
 
 <style>
+:root {
+  --rosa: #ffd6e7;
+  --rosa-forte: #ff6fae;
+  --branco: #ffffff;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background: #fff0f6;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--rosa);
 }
 
 header {
-    background: #ff4d88;
-    color: white;
-    padding: 15px;
-    text-align: center;
+  background: var(--rosa);
+  padding: 30px 20px;
+  text-align: center;
 }
 
-.cart {
-    position: fixed;
-    top: 15px;
-    right: 15px;
-    background: white;
-    padding: 10px 15px;
-    border-radius: 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    cursor: pointer;
+header h1 {
+  margin: 0;
+  color: #c2185b;
+  font-size: 32px;
 }
 
-.container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    padding: 20px;
+header p {
+  color: #444;
+}
+
+nav {
+  background: var(--branco);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+nav input {
+  padding: 8px;
+  width: 60%;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+.cart-btn {
+  background: var(--rosa-forte);
+  color: white;
+  padding: 10px 18px;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+section {
+  padding: 40px 20px;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #c2185b;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
 }
 
 .product {
-    background: white;
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  background: var(--branco);
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  text-align: center;
 }
 
 .product img {
-    width: 100%;
-    border-radius: 10px;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.product h3 {
+  margin: 10px 0 5px;
+}
+
+.product p {
+  font-size: 14px;
+}
+
+.product strong {
+  display: block;
+  margin: 8px 0;
+  font-size: 18px;
 }
 
 .product button {
-    background: #ff4d88;
-    color: white;
-    border: none;
-    padding: 10px;
-    width: 100%;
-    border-radius: 5px;
-    cursor: pointer;
+  background: var(--rosa-forte);
+  color: white;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
 #cartModal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.6);
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
 }
 
 #cartContent {
-    background: white;
-    width: 90%;
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    border-radius: 10px;
+  background: white;
+  width: 90%;
+  max-width: 420px;
+  margin: 60px auto;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.cart-item button {
+  background: var(--rosa-forte);
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.finalizar {
+  background: #25D366;
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 15px;
+  font-size: 18px;
+  border-radius: 10px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+footer {
+  background: var(--branco);
+  padding: 30px;
+  text-align: center;
+}
+
+footer button {
+  background: var(--rosa-forte);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 </style>
 </head>
-
 <body>
 
 <header>
-    <h1>Cintia Makess ✨</h1>
-    <p>Maquiagens e acessórios</p>
+  <h1>Cintia Makess</h1>
+  <p>Beleza, cuidado e autoestima</p>
 </header>
 
-<div class="cart" onclick="openCart()">
-    🛒 <span id="cartCount">0</span>
-</div>
+<nav>
+  <input type="text" placeholder="Pesquisar produto..." onkeyup="searchProduct(this.value)">
+  <div class="cart-btn" onclick="openCart()">🛒 Carrinho (<span id="cartCount">0</span>)</div>
+</nav>
 
-<div class="container">
+<section id="inicio">
+  <h2 class="section-title">Produtos em Destaque</h2>
+  <div class="products" id="productList">
 
-    <div class="product">
-        <img src="https://via.placeholder.com/200">
-        <h3>SUPER HIDRATANTE</h3>
-        <p>R$ 10.00</p>
-        <button onclick="addToCart('SUPER HIDRATANTE', 10.00)">Adicionar</button>
+    <div class="product" data-name="Esfoliante">
+      <img src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108">
+      <h3>Esfoliante Corporal de Tâmaras</h3>
+      <p>Phállebeauty • 280g</p>
+      <p>Esfoliante para rosto com fragrância de tâmaras maduras.</p>
+      <strong>R$ 10,00</strong>
+      <button onclick="addToCart('Esfoliante Corporal de Tâmaras', 10)">Comprar</button>
     </div>
 
-    <div class="product">
-        <img src="https://via.placeholder.com/200">
-        <h3>PALETA DE GLITTER</h3>
-        <p>R$ 10.00</p>
-        <button onclick="addToCart('PALETA DE GLITTER', 10.00)">Adicionar</button>
+    <div class="product" data-name="Esponja">
+      <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348">
+      <h3>Esponja de Maquiagem</h3>
+      <p>Ruby Anjo</p>
+      <p>Esponja para aplicação de maquiagem, cores e formatos variados.</p>
+      <strong>R$ 10,00</strong>
+      <button onclick="addToCart('Esponja de Maquiagem', 10)">Comprar</button>
     </div>
 
-    <div class="product">
-        <img src="https://via.placeholder.com/200">
-        <h3>LIP GLOSS</h3>
-        <p>R$ 10.00</p>
-        <button onclick="addToCart('LIP GLOSS', R$10.00)">Adicionar</button>
+    <div class="product" data-name="Gel">
+      <img src="https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd">
+      <h3>Gel Aromatizante</h3>
+      <p>Babasuper</p>
+      <p>Gel hidratante aromatizante para corpo e virilha.</p>
+      <strong>R$ 10,00</strong>
+      <button onclick="addToCart('Gel Aromatizante', 10)">Comprar</button>
     </div>
 
-</div>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">Dúvidas ou Reclamações</h2>
+  <p style="text-align:center">Entre em contato diretamente pelo WhatsApp</p>
+  <div style="text-align:center">
+    <button onclick="contact()">Falar no WhatsApp</button>
+  </div>
+</section>
 
 <div id="cartModal">
-    <div id="cartContent">
-        <h2>Carrinho</h2>
-        <ul id="cartItems"></ul>
-        <p><strong>Total: R$ <span id="total">0.00</span></strong></p>
-        <button onclick="checkout()">Finalizar no WhatsApp</button>
-        <br><br>
-        <button onclick="closeCart()">Fechar</button>
-    </div>
+  <div id="cartContent">
+    <h2>Carrinho de Compras</h2>
+    <div id="cartItems"></div>
+    <p><strong>Total: R$ <span id="total">0.00</span></strong></p>
+    <button class="finalizar" onclick="checkout()">FINALIZAR COMPRA</button>
+    <br><br>
+    <button onclick="closeCart()">Fechar</button>
+  </div>
 </div>
 
 <script>
-let cart = [];
-let total = 0;
+let cart = {};
 
 function addToCart(name, price) {
-    cart.push({name, price});
-    total += price;
-    document.getElementById("cartCount").innerText = cart.length;
-    alert("Produto adicionado!");
+  cart[name] = cart[name] ? cart[name] + 1 : 1;
+  updateCartCount();
+}
+
+function updateCartCount() {
+  let count = Object.values(cart).reduce((a, b) => a + b, 0);
+  document.getElementById('cartCount').innerText = count;
 }
 
 function openCart() {
-    document.getElementById("cartModal").style.display = "block";
-    updateCart();
+  document.getElementById('cartModal').style.display = 'block';
+  updateCart();
 }
 
 function closeCart() {
-    document.getElementById("cartModal").style.display = "none";
+  document.getElementById('cartModal').style.display = 'none';
 }
 
 function updateCart() {
-    let list = document.getElementById("cartItems");
-    list.innerHTML = "";
-    cart.forEach(item => {
-        let li = document.createElement("li");
-        li.innerText = `${item.name} - R$ ${item.price.toFixed(2)}`;
-        list.appendChild(li);
-    });
-    document.getElementById("total").innerText = total.toFixed(2);
+  const container = document.getElementById('cartItems');
+  container.innerHTML = '';
+  let total = 0;
+
+  for (let name in cart) {
+    const qty = cart[name];
+    total += qty * 10;
+
+    const div = document.createElement('div');
+    div.className = 'cart-item';
+    div.innerHTML = `${name} (x${qty}) <button onclick="removeItem('${name}')">Remover</button>`;
+    container.appendChild(div);
+  }
+
+  document.getElementById('total').innerText = total.toFixed(2);
+}
+
+function removeItem(name) {
+  delete cart[name];
+  updateCart();
+  updateCartCount();
 }
 
 function checkout() {
-    let message = "Olá, quero comprar:%0A";
-    cart.forEach(item => {
-        message += `- ${item.name} (R$ ${item.price.toFixed(2)})%0A`;
-    });
-    message += `%0ATotal: R$ ${total.toFixed(2)}`;
+  let message = 'Olá, tudo bem? Gostaria de comprar esses produtos:%0A';
+  let total = 0;
 
-    window.open(`https://wa.me/5515974072640?text=${message}`, "_blank");
+  for (let name in cart) {
+    message += `- ${name} x${cart[name]}%0A`;
+    total += cart[name] * 10;
+  }
+
+  message += `%0ATotal: R$ ${total.toFixed(2)}`;
+  window.open(`https://wa.me/5515974072640?text=${message}`, '_blank');
+}
+
+function contact() {
+  window.open('https://wa.me/5515974072640?text=Olá, tudo bem? Tenho uma dúvida.', '_blank');
+}
+
+function searchProduct(value) {
+  const products = document.querySelectorAll('.product');
+  value = value.toLowerCase();
+
+  products.forEach(p => {
+    const name = p.dataset.name.toLowerCase();
+    p.style.display = name.includes(value) ? 'block' : 'none';
+  });
 }
 </script>
 
