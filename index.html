@@ -9,18 +9,33 @@
     
     <style>
         :root {
-            --primary: #D81B60; /* Rosa Profissional */
-            --primary-dark: #ad144d;
-            --secondary: #fce4ec;
+            --primary: #D81B60; /* Pink Profissional */
+            --secondary: #fce4ec; /* Rosa Claro */
             --text: #2c3e50;
-            --gray: #f5f5f5;
             --white: #ffffff;
-            --shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow: 0 4px 12px rgba(216, 27, 96, 0.15);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
         
-        body { background-color: #fafafa; color: var(--text); padding-bottom: 80px; }
+        body {
+            background-color: var(--secondary);
+            color: var(--text);
+            padding-bottom: 80px;
+            position: relative;
+        }
+
+        /* --- FUNDO COM PÉTALAS --- */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: url('data:image/svg+xml,%3Csvg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M80 40c-10-10-20 0-30 10s-20 0-30-10 0-20 10-30c10-10 20 0 30 10s20 0 30-10c10-10 0-20-10-30S60-10 50 0c-10 10-20 0-30-10s-20 0-30 10c-10 10 0 20 10 30s10 20 0 30c-10 10-20 0-30-10S-10 60 0 70c10 10 20 0 30 10s20 0 30-10c10-10 0-20 10-30s10-20 0-30c10-10 20 0 30 10s20 0 30-10c10-10 0-20-10-30z" fill="%23d81b60" opacity="0.05" transform="scale(0.8) rotate(15)"/%3E%3Cpath d="M120 80c-10-10-20 0-30 10s-20 0-30-10 0-20 10-30c10-10 20 0 30 10s20 0 30-10c10-10 0-20-10-30S100 30 90 40c-10 10-20 0-30-10s-20 0-30 10c-10 10 0 20 10 30s10 20 0 30c-10 10-20 0-30-10S30 100 40 110c10 10 20 0 30 10s20 0 30-10c10-10 0-20 10-30s10-20 0-30c10-10 20 0 30 10s20 0 30-10c10-10 0-20-10-30z" fill="%23f8bbd0" opacity="0.08" transform="scale(0.6) rotate(-25)"/%3E%3C/svg%3E');
+            opacity: 0.6;
+            z-index: -1;
+            pointer-events: none;
+        }
 
         /* --- HEADER --- */
         header {
@@ -29,58 +44,64 @@
             top: 0;
             z-index: 1000;
             box-shadow: var(--shadow);
+            border-bottom: 2px solid var(--secondary);
         }
         
         .top-bar {
             background: var(--primary);
             color: white;
             text-align: center;
-            font-size: 0.85rem;
-            padding: 8px;
+            font-size: 0.9rem;
+            padding: 12px;
             font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 15px 20px;
+            padding: 20px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: 2.2rem;
             font-weight: 700;
             color: var(--primary);
             cursor: pointer;
             letter-spacing: -1px;
+            text-transform: uppercase;
         }
 
         .search-box {
             flex: 1;
-            margin: 0 30px;
+            margin: 0 40px;
             position: relative;
-            display: none; /* Mobile first */
+            display: none;
         }
         
         @media(min-width: 768px) { .search-box { display: block; } }
 
         .search-box input {
             width: 100%;
-            padding: 12px 20px;
+            padding: 12px 25px;
             border-radius: 50px;
-            border: 1px solid #ddd;
-            background: var(--gray);
+            border: 2px solid var(--secondary);
+            background: var(--white);
             outline: none;
             transition: 0.3s;
+            color: var(--primary);
+            font-weight: 500;
         }
         
-        .search-box input:focus { border-color: var(--primary); background: white; }
+        .search-box input:focus { border-color: var(--primary); }
+        .search-box input::placeholder { color: #f8bbd0; }
 
-        .nav-icons { display: flex; gap: 20px; align-items: center; }
-        .icon-btn { cursor: pointer; position: relative; color: var(--text); user-select: none; }
-        .icon-btn:hover { color: var(--primary); }
+        .nav-icons { display: flex; gap: 25px; align-items: center; }
+        .icon-btn { cursor: pointer; position: relative; color: var(--primary); user-select: none; transition: 0.2s; }
+        .icon-btn:hover { transform: scale(1.1); }
         
         .badge {
             position: absolute;
@@ -88,126 +109,152 @@
             right: -8px;
             background: var(--primary);
             color: white;
-            font-size: 0.7rem;
-            width: 18px;
-            height: 18px;
+            font-size: 0.75rem;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
+            border: 2px solid white;
         }
 
         /* --- NAVEGAÇÃO MOBILE --- */
-        .mobile-search { padding: 10px 20px; background: white; display: block; }
+        .mobile-search { padding: 15px 20px; background: var(--white); display: block; border-bottom: 1px solid var(--secondary); }
         @media(min-width: 768px) { .mobile-search { display: none; } }
-        .mobile-search input { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd; }
+        .mobile-search input { width: 100%; padding: 12px; border-radius: 8px; border: 2px solid var(--secondary); color: var(--primary); }
 
         /* --- HERO BANNER --- */
         .hero {
-            background: linear-gradient(rgba(216, 27, 96, 0.1), rgba(216, 27, 96, 0.05));
+            background: linear-gradient(135deg, rgba(216, 27, 96, 0.9), rgba(255, 182, 193, 0.7));
             text-align: center;
-            padding: 40px 20px;
-            margin-bottom: 30px;
+            padding: 80px 20px;
+            margin-bottom: 40px;
+            color: white;
+            border-radius: 0 0 50% 50% / 40px;
+            box-shadow: var(--shadow);
         }
-        .hero h1 { color: var(--primary); margin-bottom: 10px; }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 15px; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+        .hero p { font-size: 1.2rem; font-weight: 500; }
 
         /* --- PRODUTOS --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         
         .section-title {
-            font-size: 1.5rem;
-            margin-bottom: 25px;
-            border-left: 5px solid var(--primary);
-            padding-left: 15px;
-            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            text-align: center;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--primary);
+            margin: 10px auto 0;
+            border-radius: 2px;
         }
 
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 30px;
         }
 
         .product-card {
             background: white;
-            border-radius: 12px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            box-shadow: var(--shadow);
             transition: transform 0.3s, box-shadow 0.3s;
             display: flex;
             flex-direction: column;
-            border: 1px solid #eee;
+            border: 1px solid var(--secondary);
         }
 
         .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(216, 27, 96, 0.2);
         }
 
         .p-img-container {
-            height: 220px;
+            height: 280px;
             background: #fff;
             position: relative;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
         }
 
         .p-img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Garante que a foto preencha sem distorcer */
-            transition: 0.3s;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: 0.4s;
         }
 
-        .product-card:hover .p-img-container img { transform: scale(1.05); }
+        .product-card:hover .p-img-container img { transform: scale(1.08); }
 
-        .p-info { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; }
-        .p-cat { color: #888; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
-        .p-name { font-weight: 600; font-size: 1rem; margin-bottom: 10px; line-height: 1.4; color: #333; }
-        .p-price { font-size: 1.3rem; color: var(--primary); font-weight: 700; margin-top: auto; }
+        .p-info { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; text-align: center; }
+        .p-cat { color: #f8bbd0; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-weight: 600; }
+        .p-name { font-weight: 700; font-size: 1.1rem; margin-bottom: 15px; line-height: 1.4; color: var(--primary); }
+        .p-price { font-size: 1.5rem; color: var(--primary); font-weight: 800; margin-top: auto; }
         
         .btn-add {
             width: 100%;
-            padding: 12px;
-            background: var(--text);
+            padding: 15px;
+            background: var(--primary);
             color: white;
             border: none;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: 0.2s;
-            margin-top: 15px;
-            border-radius: 6px;
+            margin-top: 20px;
+            border-radius: 30px;
+            letter-spacing: 1px;
         }
         
-        .btn-add:hover { background: var(--primary); }
+        .btn-add:hover { background: #c2185b; transform: scale(1.02); }
 
         /* --- DETALHES DO PRODUTO (MODAL/PÁGINA) --- */
         #product-detail {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: white;
+            background: var(--secondary);
             z-index: 2000;
             overflow-y: auto;
         }
 
         .detail-wrapper {
             max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-            padding-top: 40px;
+            margin: 30px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
         }
 
-        .detail-header { display: flex; align-items: center; margin-bottom: 20px; cursor: pointer; color: #666; }
-        .detail-content { display: flex; flex-wrap: wrap; gap: 40px; }
+        .detail-header { display: flex; align-items: center; margin-bottom: 25px; cursor: pointer; color: var(--primary); font-weight: 600; }
+        .detail-content { display: flex; flex-wrap: wrap; gap: 50px; }
         
-        .d-img { flex: 1; min-width: 300px; }
-        .d-img img { width: 100%; border-radius: 10px; }
+        .d-img { flex: 1; min-width: 350px; border-radius: 15px; overflow: hidden; border: 2px solid var(--secondary); }
+        .d-img img { width: 100%; height: 100%; object-fit: cover; }
         
-        .d-info { flex: 1; min-width: 300px; }
-        .d-title { font-size: 2rem; margin-bottom: 10px; color: var(--text); }
-        .d-price { font-size: 2.5rem; color: var(--primary); font-weight: 700; margin-bottom: 20px; }
-        .d-desc { line-height: 1.6; color: #555; white-space: pre-line; margin-bottom: 30px; }
+        .d-info { flex: 1; min-width: 350px; }
+        .d-title { font-size: 2.2rem; margin-bottom: 15px; color: var(--primary); }
+        .d-price { font-size: 2.8rem; color: var(--primary); font-weight: 800; margin-bottom: 25px; }
+        .d-desc { line-height: 1.7; color: #666; white-space: pre-line; margin-bottom: 35px; font-size: 1.05rem; }
 
         /* --- CARRINHO LATERAL --- */
         #cart-sidebar {
@@ -218,8 +265,8 @@
             height: 100vh;
             background: white;
             z-index: 3000;
-            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-            transition: 0.3s ease;
+            box-shadow: -5px 0 20px rgba(216, 27, 96, 0.2);
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
         }
@@ -227,57 +274,65 @@
         #cart-sidebar.open { right: 0; }
         
         .cart-header {
-            padding: 20px;
+            padding: 25px;
             background: var(--primary);
             color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+        .cart-header h3 { font-size: 1.3rem; }
         
-        .cart-body { flex: 1; overflow-y: auto; padding: 20px; }
+        .cart-body { flex: 1; overflow-y: auto; padding: 25px; background: var(--secondary); }
         
         .cart-item {
             display: flex;
             gap: 15px;
             margin-bottom: 20px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 15px;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             animation: fadeIn 0.3s;
         }
 
-        .cart-item img { width: 70px; height: 70px; object-fit: cover; border-radius: 6px; }
+        .cart-item img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 1px solid var(--secondary); }
         .cart-info { flex: 1; }
-        .cart-title { font-size: 0.9rem; font-weight: 600; margin-bottom: 5px; }
-        .cart-price { color: var(--primary); font-weight: bold; }
+        .cart-title { font-size: 1rem; font-weight: 700; margin-bottom: 5px; color: var(--primary); }
+        .cart-price { color: var(--text); font-weight: bold; }
         
-        .cart-controls { display: flex; align-items: center; gap: 10px; margin-top: 5px; }
-        .qty-btn { width: 25px; height: 25px; border-radius: 50%; border: 1px solid #ddd; background: white; cursor: pointer; }
-        .trash { color: red; margin-left: auto; cursor: pointer; }
+        .cart-controls { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
+        .qty-btn { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--primary); background: white; cursor: pointer; color: var(--primary); font-weight: bold; transition: 0.2s; }
+        .qty-btn:hover { background: var(--primary); color: white; }
+        .trash { color: var(--primary); margin-left: auto; cursor: pointer; transition: 0.2s; }
+        .trash:hover { transform: scale(1.1); }
 
-        .cart-footer { padding: 20px; background: #fff; border-top: 1px solid #eee; }
-        .total-row { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; }
+        .cart-footer { padding: 25px; background: #fff; border-top: 2px solid var(--secondary); }
+        .total-row { display: flex; justify-content: space-between; font-size: 1.3rem; font-weight: 800; margin-bottom: 20px; color: var(--primary); }
         
         .btn-checkout {
             width: 100%;
-            padding: 15px;
+            padding: 18px;
             background: #25D366;
             color: white;
             text-align: center;
             border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: bold;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 12px;
+            transition: 0.2s;
         }
+        .btn-checkout:hover { background: #20b857; transform: scale(1.02); }
         
         .overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); z-index: 2500; display: none;
+            background: rgba(216, 27, 96, 0.3); z-index: 2500; display: none;
+            backdrop-filter: blur(2px);
         }
         .overlay.active { display: block; }
 
@@ -285,18 +340,19 @@
         #toast {
             visibility: hidden;
             min-width: 250px;
-            background-color: #333;
+            background-color: var(--primary);
             color: #fff;
             text-align: center;
-            border-radius: 2px;
+            border-radius: 50px;
             padding: 16px;
             position: fixed;
             z-index: 4000;
             left: 50%;
             bottom: 30px;
             transform: translateX(-50%);
-            font-size: 17px;
-            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            box-shadow: var(--shadow);
         }
 
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
@@ -306,14 +362,14 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         /* Ajuste Página Dúvidas */
-        .faq-item { background: white; padding: 15px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #eee; }
-        .faq-q { font-weight: bold; color: var(--primary); margin-bottom: 5px; }
+        .faq-item { background: white; padding: 20px; margin-bottom: 15px; border-radius: 12px; border: 1px solid var(--secondary); box-shadow: var(--shadow); }
+        .faq-q { font-weight: 700; color: var(--primary); margin-bottom: 8px; font-size: 1.1rem; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="top-bar">🚚 Frete grátis para Sorocaba nas compras acima de R$ 100,00!</div>
+        <div class="top-bar">🌸 Frete grátis para Alumínio e região! Aproveite! 🌸</div>
         <div class="nav-container">
             <div class="logo" onclick="app.goHome()">Cintia Makess</div>
             
@@ -322,10 +378,10 @@
             </div>
 
             <div class="nav-icons">
-                <div class="icon-btn" onclick="app.goHome()" title="Home"><span class="material-icons">home</span></div>
-                <div class="icon-btn" onclick="app.showFaq()" title="Dúvidas"><span class="material-icons">help_outline</span></div>
+                <div class="icon-btn" onclick="app.goHome()" title="Home"><span class="material-icons" style="font-size: 2rem;">home</span></div>
+                <div class="icon-btn" onclick="app.showFaq()" title="Dúvidas"><span class="material-icons" style="font-size: 2rem;">help_outline</span></div>
                 <div class="icon-btn" onclick="app.toggleCart()" title="Carrinho">
-                    <span class="material-icons">shopping_bag</span>
+                    <span class="material-icons" style="font-size: 2rem;">shopping_bag</span>
                     <div class="badge" id="cart-count">0</div>
                 </div>
             </div>
@@ -338,7 +394,7 @@
     <main id="home-view">
         <section class="hero">
             <h1>Realce sua beleza ✨</h1>
-            <p>Os melhores produtos com preços incríveis.</p>
+            <p>Tudo por apenas R$ 10,00! Qualidade e preço baixo.</p>
         </section>
 
         <section class="container">
@@ -348,7 +404,7 @@
         </section>
     </main>
 
-    <main id="faq-view" class="container" style="display: none; padding-top: 30px;">
+    <main id="faq-view" class="container" style="display: none; padding-top: 40px;">
         <h2 class="section-title">Dúvidas Frequentes</h2>
         <div class="faq-item">
             <div class="faq-q">Como eu pago?</div>
@@ -356,15 +412,17 @@
         </div>
         <div class="faq-item">
             <div class="faq-q">Faz entrega?</div>
-            <div class="faq-a">Sim! Entregamos em toda a região. Consulte a taxa no fechamento.</div>
+            <div class="faq-a">Sim! Entregamos em toda a região de Alumínio. Consulte a taxa no fechamento.</div>
         </div>
-        <button class="btn-add" onclick="app.goHome()" style="width: auto; padding: 10px 30px;">Voltar as Compras</button>
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="btn-add" onclick="app.goHome()" style="width: auto; padding: 15px 40px;">Voltar as Compras</button>
+        </div>
     </main>
 
     <div id="product-detail">
         <div class="detail-wrapper">
             <div class="detail-header" onclick="app.closeDetail()">
-                <span class="material-icons">arrow_back</span> &nbsp; Voltar para loja
+                <span class="material-icons" style="font-size: 1.8rem;">arrow_back</span> &nbsp; Voltar para loja
             </div>
             <div class="detail-content">
                 <div class="d-img" id="detail-img"></div>
@@ -372,9 +430,9 @@
                     <h1 class="d-title" id="detail-title"></h1>
                     <div class="d-price" id="detail-price"></div>
                     <p class="d-desc" id="detail-desc"></p>
-                    <div style="display: flex; gap: 10px;">
-                        <button class="btn-add" id="detail-btn-add" style="margin: 0; flex: 2;">ADICIONAR AO CARRINHO</button>
-                        <button class="btn-checkout" onclick="app.toggleCart()" style="margin: 0; flex: 1; background: var(--text);">VER CARRINHO</button>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                        <button class="btn-add" id="detail-btn-add" style="margin: 0; flex: 2; min-width: 200px;">ADICIONAR AO CARRINHO</button>
+                        <button class="btn-checkout" onclick="app.toggleCart()" style="margin: 0; flex: 1; background: var(--text); min-width: 180px;">VER CARRINHO</button>
                     </div>
                 </div>
             </div>
@@ -384,8 +442,8 @@
     <div class="overlay" id="overlay" onclick="app.toggleCart()"></div>
     <div id="cart-sidebar">
         <div class="cart-header">
-            <h3>Seu Carrinho</h3>
-            <span class="material-icons" onclick="app.toggleCart()" style="cursor: pointer;">close</span>
+            <h3>Seu Carrinho 💖</h3>
+            <span class="material-icons" onclick="app.toggleCart()" style="cursor: pointer; font-size: 1.8rem;">close</span>
         </div>
         <div class="cart-body" id="cart-items">
             <div style="text-align: center; color: #999; margin-top: 50px;">Seu carrinho está vazio 🛍️</div>
@@ -396,7 +454,7 @@
                 <span id="cart-total">R$ 0,00</span>
             </div>
             <button class="btn-checkout" onclick="app.checkout()">
-                <span class="material-icons">whatsapp</span> FINALIZAR COMPRA
+                <span class="material-icons" style="font-size: 1.5rem;">whatsapp</span> FINALIZAR COMPRA
             </button>
         </div>
     </div>
@@ -404,30 +462,33 @@
     <div id="toast">Produto adicionado!</div>
 
     <script>
-        // --- DADOS REAIS (Coloque suas fotos na pasta e altere os nomes em 'img') ---
+        // --- DADOS REAIS (ATUALIZADOS COM SUAS IMAGENS E PREÇO ÚNICO) ---
         const products = [
             {
                 id: 1,
                 name: "Água Micelar de Camomila - Super Poderes (120ml)",
                 price: 10.00,
                 cat: "Skincare",
-                img: "https://placehold.co/600x600/png?text=Agua+Micelar", // Troque por 'agua-micelar.jpg'
+                // Insira aqui o caminho correto para a imagem que você salvou
+                img: "image_0.png", 
                 desc: "Sua pele merece um momento de calma e limpeza profunda!\n\nA Água Micelar de Camomila da Super Poderes é o item essencial para a sua rotina diária. Com uma fórmula leve e enriquecida com Extrato de Camomila, ela não apenas remove a maquiagem e as impurezas, mas também acalma e suaviza a pele.\n\n• Multifuncional\n• Ação Calmante\n• Praticidade"
             },
             {
                 id: 2,
                 name: "Base Líquida Facial 4 Angels",
-                price: 25.00,
+                price: 10.00,
                 cat: "Maquiagem",
-                img: "https://placehold.co/600x600/png?text=Base+4Angels", // Troque por 'base-4angels.jpg'
+                 // Insira aqui o caminho correto para a imagem que você salvou
+                img: "image_2.png",
                 desc: "Conquiste uma pele impecável e com acabamento profissional!\n\nA Base Líquida 4 Angels foi desenvolvida para quem busca cobertura e naturalidade em um só produto. Sua textura leve permite uma aplicação uniforme.\n\n• Textura Fluida\n• Embalagem com Pump\n• Acabamento Natural"
             },
             {
                 id: 3,
                 name: "Base Matte Alta Cobertura - Femme Paris (45ml)",
-                price: 20.00,
+                price: 10.00,
                 cat: "Maquiagem",
-                img: "https://placehold.co/600x600/png?text=Base+Femme", // Troque por 'base-femme.jpg'
+                 // Insira aqui o caminho correto para a imagem que você salvou
+                img: "image_11.png",
                 desc: "Pele de porcelana com resistência total!\n\nA Base Matte Femme Paris é a escolha ideal para quem não abre mão de uma pele impecável e com alta performance.\n\n• À Prova d’Água\n• Efeito Matte\n• Alta Cobertura"
             },
             {
@@ -435,7 +496,8 @@
                 name: "Kit Bobbie Goods: 5 Cards + Canetinhas",
                 price: 10.00,
                 cat: "Papelaria",
-                img: "https://placehold.co/600x600/png?text=Kit+Bobbie", // Troque por 'kit-bobbie.jpg'
+                 // Insira aqui o caminho correto para a imagem que você salvou
+                img: "image_6.png",
                 desc: "Liberte a criatividade com o charme de Bobbie Goods!\n\nEste kit é perfeito para quem ama o universo fofo e relaxante de Bobbie Goods. Ideal para crianças e adultos.\n\n• 5 Cards Exclusivos\n• Conjunto de Canetinhas\n• Praticidade (Pouch)"
             },
             {
@@ -443,7 +505,8 @@
                 name: "Blush Líquido Toque Special",
                 price: 10.00,
                 cat: "Maquiagem",
-                img: "https://placehold.co/600x600/png?text=Blush+Liquido", // Troque por 'blush.jpg'
+                 // Insira aqui o caminho correto para a imagem que você salvou
+                img: "image_8.png",
                 desc: "Dê um ar de saúde e vivacidade ao seu rosto!\n\nEste blush líquido é o segredo para aquela maquiagem com aspecto natural e radiante que dura o dia todo.\n\n• Alta Pigmentação\n• Textura Fluida\n• Acabamento Natural"
             }
         ];
@@ -465,7 +528,7 @@
                 container.innerHTML = list.map(p => `
                     <div class="product-card" onclick="app.openDetail(${p.id})">
                         <div class="p-img-container">
-                            <img src="${p.img}" alt="${p.name}">
+                            <img src="${p.img}" alt="${p.name}" onerror="this.src='https://placehold.co/600x600/png?text=Imagem+Indispon%C3%ADvel'">
                         </div>
                         <div class="p-info">
                             <span class="p-cat">${p.cat}</span>
@@ -489,7 +552,7 @@
             // Detalhes
             openDetail: (id) => {
                 const p = products.find(x => x.id === id);
-                document.getElementById('detail-img').innerHTML = `<img src="${p.img}">`;
+                document.getElementById('detail-img').innerHTML = `<img src="${p.img}" onerror="this.src='https://placehold.co/600x600/png?text=Imagem+Indispon%C3%ADvel'">`;
                 document.getElementById('detail-title').innerText = p.name;
                 document.getElementById('detail-price').innerText = `R$ ${p.price.toFixed(2).replace('.',',')}`;
                 document.getElementById('detail-desc').innerText = p.desc;
@@ -571,7 +634,7 @@
                         total += p.price * item.qty;
                         return `
                             <div class="cart-item">
-                                <img src="${p.img}">
+                                <img src="${p.img}" onerror="this.src='https://placehold.co/100x100/png?text=Foto'">
                                 <div class="cart-info">
                                     <div class="cart-title">${p.name}</div>
                                     <div class="cart-price">R$ ${(p.price * item.qty).toFixed(2).replace('.',',')}</div>
@@ -579,7 +642,7 @@
                                         <button class="qty-btn" onclick="app.changeQty(${item.id}, -1)">-</button>
                                         <span>${item.qty}</span>
                                         <button class="qty-btn" onclick="app.changeQty(${item.id}, 1)">+</button>
-                                        <span class="material-icons trash" onclick="app.removeFromCart(${item.id})">delete</span>
+                                        <span class="material-icons trash" onclick="app.removeFromCart(${item.id})" style="font-size: 1.5rem;">delete_outline</span>
                                     </div>
                                 </div>
                             </div>
@@ -626,7 +689,7 @@
                     msg += `▪️ ${item.qty}x ${p.name}\n`;
                 });
 
-                msg += `\n💰 *Total: R$ ${total.toFixed(2).replace('.',',')}*\n\nPodemos combinar o pagamento e entrega?`;
+                msg += `\n💰 *Total: R$ ${total.toFixed(2).replace('.',',')}*\n\nPodemos combinar o pagamento e entrega em Alumínio?`;
                 
                 const link = `https://wa.me/${app.whatsapp}?text=${encodeURIComponent(msg)}`;
                 window.open(link, '_blank');
