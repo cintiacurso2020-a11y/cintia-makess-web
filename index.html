@@ -1,145 +1,677 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cintia Makess</title>
-  <style>
-    body { margin:0; font-family: Arial, sans-serif; background:#fde6f1; }
-    header { background:#fff; padding:15px 30px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 2px 6px rgba(0,0,0,0.1); position:sticky; top:0; z-index:10; }
-    header h1 { color:#e91e63; margin:0; }
-    nav a { margin:0 10px; text-decoration:none; color:#333; font-weight:bold; }
-    nav a:hover { color:#e91e63; }
-    .search { padding:8px; border-radius:20px; border:1px solid #ccc; width:220px; }
-    .container { padding:30px; animation: fadeIn 1s; }
-    .products { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:20px; }
-    .card { background:#fff; border-radius:12px; padding:15px; box-shadow:0 4px 10px rgba(0,0,0,0.1); transition:transform .3s; }
-    .card:hover { transform: scale(1.05); }
-    .card img { width:100%; border-radius:10px; }
-    .btn { background:#e91e63; color:#fff; border:none; padding:10px 15px; border-radius:20px; cursor:pointer; margin-top:10px; }
-    .btn:hover { opacity:0.8; }
-    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
-    .hidden { display:none; }
-    .cart-item { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; background:#fff; padding:10px; border-radius:10px; }
-    .cart-item button { margin:0 3px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cintia Makess | Loja de Maquiagem</title>
+    <style>
+        /* --- ESTILOS GERAIS (CSS) --- */
+        :root {
+            --primary: #d46a8d; /* Rosa escuro */
+            --secondary: #fce4ec; /* Rosa claro */
+            --accent: #b38b59; /* Dourado */
+            --text: #333;
+            --white: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #fafafa;
+            color: var(--text);
+            padding-bottom: 50px;
+        }
+
+        /* --- CABEÇALHO --- */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .top-bar {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 5px;
+            font-size: 0.9em;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--primary);
+            cursor: pointer;
+            font-family: 'Georgia', serif;
+        }
+
+        /* --- MENU --- */
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        /* --- BARRA DE PESQUISA --- */
+        .search-bar {
+            display: flex;
+            flex-grow: 1;
+            max-width: 400px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px 0 0 20px;
+            outline: none;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0 20px 20px 0;
+            cursor: pointer;
+        }
+
+        /* --- CONTEÚDO DINÂMICO --- */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+            min-height: 60vh;
+        }
+
+        .section {
+            display: none; /* Esconde todas as seções por padrão */
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section.active {
+            display: block; /* Mostra a seção ativa */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2.section-title {
+            text-align: center;
+            margin: 30px 0;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- GRID DE PRODUTOS --- */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-img {
+            height: 250px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-name {
+            font-size: 1.1em;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .product-category {
+            font-size: 0.8em;
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            color: var(--primary);
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        /* --- PÁGINA DE DETALHES --- */
+        .detail-view {
+            display: flex;
+            gap: 40px;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            flex-wrap: wrap;
+        }
+
+        .detail-img {
+            flex: 1;
+            min-width: 300px;
+            height: 400px;
+            background-color: #eee;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .detail-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .detail-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--text);
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .detail-price {
+            font-size: 2em;
+            color: var(--primary);
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .detail-desc {
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #555;
+            white-space: pre-line; /* Respeita as quebras de linha */
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+            flex: 1;
+            text-align: center;
+        }
+
+        .btn:active { transform: scale(0.98); }
+
+        .btn-primary {
+            background-color: #25D366; /* Cor WhatsApp */
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* --- CARRINHO --- */
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .cart-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .qty-btn {
+            width: 30px;
+            height: 30px;
+            background: #eee;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .trash-btn {
+            background: none;
+            border: none;
+            color: red;
+            cursor: pointer;
+            font-size: 1.2em;
+            margin-left: 10px;
+        }
+        
+        .empty-msg {
+            text-align: center;
+            padding: 50px;
+            color: #888;
+        }
+
+        /* --- RESPONSIVIDADE --- */
+        @media (max-width: 768px) {
+            .header-content { flex-direction: column; }
+            .search-bar { width: 100%; max-width: none; }
+            nav ul { font-size: 0.9em; gap: 15px; }
+            .detail-view { flex-direction: column; padding: 20px; }
+        }
+    </style>
 </head>
 <body>
-<header>
-  <h1>Cintia Makess</h1>
-  <input type="text" class="search" placeholder="Pesquisar produtos..." onkeyup="searchProducts(this.value)">
-  <nav>
-    <a href="#" onclick="showPage('home')">Início</a>
-    <a href="#" onclick="showPage('products')">Produtos</a>
-    <a href="#" onclick="showPage('cart')">Carrinho</a>
-    <a href="#" onclick="showPage('faq')">Dúvidas</a>
-  </nav>
-</header>
 
-<div id="home" class="container">
-  <h2>Produtos em Destaque</h2>
-  <div class="products" id="featured"></div>
-</div>
+    <header>
+        <div class="top-bar">Enviamos para todo o Brasil! ✨</div>
+        <div class="header-content">
+            <div class="logo" onclick="app.router('home')">Cintia Makess</div>
+            
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="O que você procura hoje?">
+                <button onclick="app.searchProducts()">🔍</button>
+            </div>
 
-<div id="products" class="container hidden">
-  <h2>Todos os Produtos</h2>
-  <div class="products" id="productList"></div>
-</div>
+            <nav>
+                <ul>
+                    <li><a onclick="app.router('home')">Início</a></li>
+                    <li><a onclick="app.router('products')">Produtos</a></li>
+                    <li><a onclick="app.router('cart')">Carrinho (<span id="cartCount">0</span>)</a></li>
+                    <li><a onclick="app.router('faq')">Dúvidas</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-<div id="productDetail" class="container hidden"></div>
+    <main class="container">
 
-<div id="cart" class="container hidden">
-  <h2>Seu Carrinho</h2>
-  <div id="cartItems"></div>
-</div>
+        <section id="home" class="section active">
+            <h2 class="section-title">✨ Destaques da Semana ✨</h2>
+            <div id="featured-products" class="products-grid">
+                </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <button class="btn btn-secondary" style="max-width: 200px;" onclick="app.router('products')">Ver Todos os Produtos</button>
+            </div>
+        </section>
 
-<div id="faq" class="container hidden">
-  <h2>Dúvidas Frequentes</h2>
-  <p>Entre em contato conosco pelo WhatsApp para mais informações.</p>
-</div>
+        <section id="products" class="section">
+            <h2 class="section-title">Nossa Coleção</h2>
+            <div id="all-products" class="products-grid">
+                </div>
+        </section>
 
-<script>
-const whatsapp = '5515974072640';
-let cart = [];
+        <section id="detail" class="section">
+            <div class="detail-view">
+                <div class="detail-img" id="detail-img"></div>
+                <div class="detail-info">
+                    <div class="back-btn" onclick="window.history.back()">← Voltar</div>
+                    <h1 id="detail-name">Nome do Produto</h1>
+                    <p id="detail-category" class="product-category">Categoria</p>
+                    <div id="detail-price" class="detail-price">R$ 0,00</div>
+                    <p id="detail-desc" class="detail-desc">Descrição...</p>
+                    
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="app.buyNow()">Comprar Agora (WhatsApp)</button>
+                        <button class="btn btn-secondary" onclick="app.continueShopping()">Continuar Comprando</button>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-const products = [
-  {id:1, name:'Água Micelar de Camomila', price:10, img:'WhatsApp Image 2026-02-04 at 19.28.53 (4).jpeg', desc:'Limpa, demaquila e acalma a pele.'},
-  {id:2, name:'Base Líquida 4 Angels', price:10, img:'WhatsApp Image 2026-02-04 at 13.16.21 (3).jpeg', desc:'Cobertura natural e textura leve.'},
-  {id:3, name:'Base Matte Femme Paris', price:10, img:'WhatsApp Image 2026-02-04 at 13.30.37 (2).jpeg', desc:'Alta cobertura e efeito matte.'},
-  {id:4, name:'Kit Bobbie Goods', price:10, img:'WhatsApp Image 2026-02-04 at 23.07.28 (2).jpeg', desc:'5 cards + canetinhas para colorir.'},
-  {id:5, name:'Blush Líquido Toque Special', price:10, img:'WhatsApp Image 2026-02-04 at 10.17.54 (3).jpeg', desc:'Cores vibrantes e acabamento natural.'}
-];
+        <section id="cart" class="section">
+            <h2 class="section-title">Seu Carrinho</h2>
+            <div id="cart-items">
+                </div>
+            <div id="cart-total" style="text-align: right; font-size: 1.5em; margin-top: 20px; font-weight: bold;">
+                Total: R$ 0,00
+            </div>
+             <div style="text-align: right; margin-top: 20px;">
+                <button class="btn btn-primary" style="max-width: 300px;" onclick="app.checkoutAll()">Finalizar Pedido no WhatsApp</button>
+            </div>
+        </section>
 
-function showPage(page){
-  document.querySelectorAll('.container').forEach(c=>c.classList.add('hidden'));
-  document.getElementById(page).classList.remove('hidden');
-}
+        <section id="faq" class="section">
+            <h2 class="section-title">Dúvidas Frequentes</h2>
+            <p style="text-align: center;">Entre em contato conosco pelo WhatsApp para suporte imediato.</p>
+        </section>
 
-function renderProducts(){
-  const list = document.getElementById('productList');
-  const featured = document.getElementById('featured');
-  list.innerHTML = featured.innerHTML = '';
-  products.forEach(p=>{
-    const card = document.createElement('div');
-    card.className='card';
-    card.innerHTML = `<img src="${p.img}"><h3>${p.name}</h3><p>R$ ${p.price},00</p><button class='btn' onclick='openProduct(${p.id})'>Ver Produto</button>`;
-    list.appendChild(card);
-    featured.appendChild(card.cloneNode(true));
-  });
-}
+    </main>
 
-function openProduct(id){
-  const p = products.find(x=>x.id===id);
-  const d = document.getElementById('productDetail');
-  d.innerHTML = `<button onclick="showPage('products')">← Voltar</button><h2>${p.name}</h2><img src="${p.img}" style="max-width:300px"><p>${p.desc}</p><p><strong>R$ ${p.price},00</strong></p><button class='btn' onclick='buyNow(${id})'>Comprar Agora</button> <button class='btn' onclick='addCart(${id})'>Continuar Comprando</button>`;
-  showPage('productDetail');
-}
+    <script>
+        // --- DADOS DOS PRODUTOS ---
+        // OBS: Substitua "https://placehold.co/400" pelos links reais das suas fotos ou nomes dos arquivos.
+        const dbProducts = [
+            {
+                id: 1,
+                name: "Água Micelar de Camomila - Super Poderes (120ml)",
+                price: 10.00,
+                category: "Skincare / Cuidados Faciais",
+                img: "https://placehold.co/400?text=Agua+Micelar", 
+                desc: "Sua pele merece um momento de calma e limpeza profunda!\n\nA Água Micelar de Camomila da Super Poderes é o item essencial para a sua rotina diária. Com uma fórmula leve e enriquecida com Extrato de Camomila, ela não apenas remove a maquiagem e as impurezas, mas também acalma e suaviza a pele.\n\nPor que você vai amar?\n• Multifuncional\n• Ação Calmante\n• Praticidade"
+            },
+            {
+                id: 2,
+                name: "Base Líquida Facial 4 Angels",
+                price: 25.00, // Ajustei para preço de venda estimado, pois R$10 era custo
+                category: "Maquiagem",
+                img: "https://placehold.co/400?text=Base+4Angels",
+                desc: "Conquiste uma pele impecável e com acabamento profissional!\n\nA Base Líquida 4 Angels foi desenvolvida para quem busca cobertura e naturalidade em um só produto. Sua textura leve permite uma aplicação uniforme, disfarçando imperfeições.\n\nDestaques:\n• Textura Fluida\n• Embalagem com Pump\n• Acabamento Natural"
+            },
+            {
+                id: 3,
+                name: "Base Matte de Alta Cobertura - Femme Paris (45ml)",
+                price: 25.00, // Ajustei para preço de venda estimado
+                category: "Maquiagem",
+                img: "https://placehold.co/400?text=Base+Femme",
+                desc: "Pele de porcelana com resistência total!\n\nA Base Matte Femme Paris é a escolha ideal para quem não abre mão de uma pele impecável e com alta performance.\n\nPrincipais Benefícios:\n• À Prova d’Água\n• Efeito Matte\n• Alta Cobertura\n• Embalagem Econômica"
+            },
+            {
+                id: 4,
+                name: "Kit Bobbie Goods: 5 Cards + Canetinhas",
+                price: 10.00,
+                category: "Acessórios / Papelaria",
+                img: "https://placehold.co/400?text=Kit+Bobbie+Goods",
+                desc: "Liberte a criatividade com o charme de Bobbie Goods!\n\nEste kit é perfeito para quem ama o universo fofo e relaxante de Bobbie Goods. Ideal para crianças e adultos.\n\nO que vem no kit:\n• 5 Cards Exclusivos\n• Conjunto de Canetinhas\n• Praticidade (Embalagem pouch)"
+            },
+            {
+                id: 5,
+                name: "Blush Líquido Toque Special – Cores Vibrantes",
+                price: 10.00,
+                category: "Maquiagem",
+                img: "https://placehold.co/400?text=Blush+Liquido",
+                desc: "Dê um ar de saúde e vivacidade ao seu rosto com o Blush Líquido Toque Special!\n\nEste blush líquido é o segredo para aquela maquiagem com aspecto natural e radiante que dura o dia todo.\n\nPor que você vai amar?\n• Alta Pigmentação\n• Textura Fluida\n• Acabamento Natural"
+            }
+        ];
 
-function buyNow(id){
-  const p = products.find(x=>x.id===id);
-  const msg = encodeURIComponent(`Olá, tudo bem? Gostaria de reservar o produto: ${p.name}. Tem disponibilidade?`);
-  window.open(`https://wa.me/${whatsapp}?text=${msg}`,'_blank');
-}
+        // --- LÓGICA DO APP ---
+        const app = {
+            cart: [],
+            currentProduct: null,
+            whatsappNumber: "5515974072640",
 
-function addCart(id){
-  const item = cart.find(i=>i.id===id);   const item = cart.find(i=>i.id===id);\xA0;
-  if(item) item.qty++;
-  else cart.push({id, qty:1});
-  alert('Produto adicionado ao carrinho');
-}
+            init: () => {
+                app.renderProducts(dbProducts, 'featured-products', 3); // Destaques
+                app.renderProducts(dbProducts, 'all-products'); // Todos
+                
+                // Pesquisa Dinâmica
+                document.getElementById('searchInput').addEventListener('keyup', (e) => {
+                    const term = e.target.value.toLowerCase();
+                    const filtered = dbProducts.filter(p => p.name.toLowerCase().includes(term));
+                    app.renderProducts(filtered, 'all-products');
+                    if(term.length > 0 && document.getElementById('products').style.display === 'none') {
+                        app.router('products');
+                    }
+                });
+            },
 
-function renderCart(){
-  const c = document.getElementById('cartItems');
-  c.innerHTML='';
-  cart.forEach(i=>{
-    const p = products.find(x=>x.id===i.id);
-    const div = document.createElement('div');
-    div.className='cart-item';
-    div.innerHTML = `<span>${p.name} (x${i.qty})</span><div><button onclick='decrease(${i.id})'>-</button><button onclick='removeItem(${i.id})'>🗑️</button></div>`;
-    c.appendChild(div);
-  });
-}
+            // Navegação entre "Páginas"
+            router: (pageName) => {
+                document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+                
+                if (pageName === 'detail') {
+                    document.getElementById('detail').classList.add('active');
+                } else if (pageName === 'cart') {
+                    document.getElementById('cart').classList.add('active');
+                    app.renderCart();
+                } else {
+                    document.getElementById(pageName).classList.add('active');
+                    // Salva histórico para botão voltar funcionar no detalhe
+                    if(pageName !== 'detail') window.history.pushState({page: pageName}, "", `#${pageName}`);
+                }
+                window.scrollTo(0, 0);
+            },
 
-function decrease(id){
-  const item = cart.find(i=>i.id===id);
-  if(item.qty>1) item.qty--;
-  else if(confirm('Deseja excluir o produto?')) removeItem(id);
-  renderCart();
-}
+            // Renderizar Cards de Produtos
+            renderProducts: (products, containerId, limit = null) => {
+                const container = document.getElementById(containerId);
+                container.innerHTML = '';
+                
+                const list = limit ? products.slice(0, limit) : products;
 
-function removeItem(id){
-  cart = cart.filter(i=>i.id!==id);
-  renderCart();
-}
+                list.forEach(p => {
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+                    card.onclick = () => app.openProduct(p.id);
+                    card.innerHTML = `
+                        <div class="product-img">
+                            <img src="${p.img}" alt="${p.name}">
+                        </div>
+                        <div class="product-info">
+                            <div>
+                                <h3 class="product-name">${p.name}</h3>
+                                <p class="product-category">${p.category}</p>
+                            </div>
+                            <div class="product-price">R$ ${p.price.toFixed(2).replace('.', ',')}</div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            },
 
-function searchProducts(q){
-  q = q.toLowerCase();
-  document.querySelectorAll('#productList .card').forEach(card=>{
-    card.style.display = card.innerText.toLowerCase().includes(q)?'block':'none';
-  });
-}
+            // Abrir Página de Detalhe
+            openProduct: (id) => {
+                const p = dbProducts.find(x => x.id === id);
+                app.currentProduct = p;
 
-renderProducts();
-</script>
+                document.getElementById('detail-name').innerText = p.name;
+                document.getElementById('detail-category').innerText = p.category;
+                document.getElementById('detail-price').innerText = `R$ ${p.price.toFixed(2).replace('.', ',')}`;
+                document.getElementById('detail-desc').innerText = p.desc;
+                document.getElementById('detail-img').innerHTML = `<img src="${p.img}" alt="${p.name}">`;
+
+                app.router('detail');
+            },
+
+            // Botão "Comprar Agora" (WhatsApp Direto)
+            buyNow: () => {
+                if(!app.currentProduct) return;
+                const p = app.currentProduct;
+                const text = `Olá Cintia! 👋\n\nGostaria de comprar o produto: *${p.name}* (R$ ${p.price.toFixed(2)}).\n\nGostaria de fazer uma reserva, você tem disponibilidade?`;
+                const url = `https://wa.me/${app.whatsappNumber}?text=${encodeURIComponent(text)}`;
+                window.open(url, '_blank');
+            },
+
+            // Botão "Continuar Comprando" (Adiciona ao Carrinho e vai para Produtos)
+            continueShopping: () => {
+                if(!app.currentProduct) return;
+                app.addToCart(app.currentProduct.id);
+                app.router('products');
+            },
+
+            // Adicionar ao Carrinho
+            addToCart: (id) => {
+                const existing = app.cart.find(item => item.id === id);
+                if(existing) {
+                    existing.qty++;
+                } else {
+                    app.cart.push({ id: id, qty: 1 });
+                }
+                app.updateCartCount();
+                // Feedback visual simples
+                alert("Produto adicionado ao carrinho!"); 
+            },
+
+            updateCartCount: () => {
+                const total = app.cart.reduce((acc, item) => acc + item.qty, 0);
+                document.getElementById('cartCount').innerText = total;
+            },
+
+            // Renderizar Tela do Carrinho
+            renderCart: () => {
+                const container = document.getElementById('cart-items');
+                container.innerHTML = '';
+                let totalPrice = 0;
+
+                if(app.cart.length === 0) {
+                    container.innerHTML = '<div class="empty-msg">Seu carrinho está vazio 🛍️</div>';
+                    document.getElementById('cart-total').innerText = 'Total: R$ 0,00';
+                    return;
+                }
+
+                app.cart.forEach(item => {
+                    const product = dbProducts.find(p => p.id === item.id);
+                    totalPrice += product.price * item.qty;
+
+                    const div = document.createElement('div');
+                    div.className = 'cart-item';
+                    div.innerHTML = `
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <img src="${product.img}" style="width:50px; height:50px; object-fit:cover; border-radius:5px;">
+                            <div>
+                                <b>${product.name}</b><br>
+                                <small>R$ ${product.price.toFixed(2).replace('.', ',')}</small>
+                            </div>
+                        </div>
+                        <div class="cart-controls">
+                            <button class="qty-btn" onclick="app.changeQty(${item.id}, -1)">-</button>
+                            <span>${item.qty}</span>
+                            <button class="qty-btn" onclick="app.changeQty(${item.id}, 1)">+</button>
+                            <button class="trash-btn" onclick="app.deleteFromCart(${item.id})">🗑️</button>
+                        </div>
+                    `;
+                    container.appendChild(div);
+                });
+
+                document.getElementById('cart-total').innerText = `Total: R$ ${totalPrice.toFixed(2).replace('.', ',')}`;
+            },
+
+            // Lógica de alterar quantidade (- ou +)
+            changeQty: (id, delta) => {
+                const item = app.cart.find(x => x.id === id);
+                if(!item) return;
+
+                if (delta === 1) {
+                    item.qty++;
+                } else if (delta === -1) {
+                    if (item.qty > 1) {
+                        item.qty--;
+                    } else {
+                        // Tentar diminuir quando é 1: Perguntar se quer excluir
+                        if(confirm("Deseja excluir este produto do carrinho?")) {
+                            app.deleteFromCart(id);
+                            return; // Sai da função pois já deletou
+                        } else {
+                            return; // Cancelar, não faz nada
+                        }
+                    }
+                }
+                app.renderCart();
+                app.updateCartCount();
+            },
+
+            // Lixeira (Excluir direto)
+            deleteFromCart: (id) => {
+                app.cart = app.cart.filter(x => x.id !== id);
+                app.renderCart();
+                app.updateCartCount();
+            },
+
+            // Finalizar Pedido do Carrinho Completo
+            checkoutAll: () => {
+                if(app.cart.length === 0) return alert("Carrinho vazio!");
+                
+                let msg = "Olá Cintia! 👋\n\nGostaria de fechar o pedido do meu carrinho:\n\n";
+                let total = 0;
+
+                app.cart.forEach(item => {
+                    const p = dbProducts.find(x => x.id === item.id);
+                    const subtotal = p.price * item.qty;
+                    total += subtotal;
+                    msg += `• ${item.qty}x ${p.name} (R$ ${subtotal.toFixed(2)})\n`;
+                });
+
+                msg += `\n*Total Geral: R$ ${total.toFixed(2)}*\n\nGostaria de confirmar a disponibilidade.`;
+                
+                const url = `https://wa.me/${app.whatsappNumber}?text=${encodeURIComponent(msg)}`;
+                window.open(url, '_blank');
+            }
+        };
+
+        // Iniciar
+        app.init();
+        
+        // Suporte ao botão de voltar do navegador
+        window.onpopstate = (event) => {
+            if(event.state && event.state.page) {
+                app.router(event.state.page);
+            } else {
+                app.router('home');
+            }
+        };
+    </script>
 </body>
 </html>
