@@ -3,556 +3,510 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cintia Makess | Loja de Maquiagem</title>
+    <title>Cintia Makess | Loja Oficial</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* --- ESTILOS GERAIS (CSS) --- */
         :root {
-            --primary: #d46a8d; /* Rosa escuro */
-            --secondary: #fce4ec; /* Rosa claro */
-            --accent: #b38b59; /* Dourado */
-            --text: #333;
-            --white: #fff;
+            --primary: #D81B60; /* Rosa Profissional */
+            --primary-dark: #ad144d;
+            --secondary: #fce4ec;
+            --text: #2c3e50;
+            --gray: #f5f5f5;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
+        
+        body { background-color: #fafafa; color: var(--text); padding-bottom: 80px; }
 
-        body {
-            background-color: #fafafa;
-            color: var(--text);
-            padding-bottom: 50px;
-        }
-
-        /* --- CABEÇALHO --- */
+        /* --- HEADER --- */
         header {
-            background-color: var(--white);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: var(--white);
             position: sticky;
             top: 0;
             z-index: 1000;
+            box-shadow: var(--shadow);
         }
-
+        
         .top-bar {
-            background-color: var(--primary);
+            background: var(--primary);
             color: white;
             text-align: center;
-            padding: 5px;
-            font-size: 0.9em;
+            font-size: 0.85rem;
+            padding: 8px;
+            font-weight: 600;
         }
 
-        .header-content {
+        .nav-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 15px 20px;
             display: flex;
-            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            gap: 15px;
         }
 
         .logo {
-            font-size: 2em;
-            font-weight: bold;
+            font-size: 1.8rem;
+            font-weight: 700;
             color: var(--primary);
             cursor: pointer;
-            font-family: 'Georgia', serif;
+            letter-spacing: -1px;
         }
 
-        /* --- MENU --- */
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 20px;
+        .search-box {
+            flex: 1;
+            margin: 0 30px;
+            position: relative;
+            display: none; /* Mobile first */
         }
+        
+        @media(min-width: 768px) { .search-box { display: block; } }
 
-        nav a {
-            text-decoration: none;
-            color: var(--text);
-            font-weight: 500;
-            transition: color 0.3s;
-            cursor: pointer;
-        }
-
-        nav a:hover {
-            color: var(--primary);
-        }
-
-        /* --- BARRA DE PESQUISA --- */
-        .search-bar {
-            display: flex;
-            flex-grow: 1;
-            max-width: 400px;
-        }
-
-        .search-bar input {
+        .search-box input {
             width: 100%;
-            padding: 10px;
+            padding: 12px 20px;
+            border-radius: 50px;
             border: 1px solid #ddd;
-            border-radius: 20px 0 0 20px;
+            background: var(--gray);
             outline: none;
+            transition: 0.3s;
         }
+        
+        .search-box input:focus { border-color: var(--primary); background: white; }
 
-        .search-bar button {
-            padding: 10px 20px;
-            background-color: var(--primary);
+        .nav-icons { display: flex; gap: 20px; align-items: center; }
+        .icon-btn { cursor: pointer; position: relative; color: var(--text); user-select: none; }
+        .icon-btn:hover { color: var(--primary); }
+        
+        .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--primary);
             color: white;
-            border: none;
-            border-radius: 0 20px 20px 0;
-            cursor: pointer;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
         }
 
-        /* --- CONTEÚDO DINÂMICO --- */
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 20px;
-            min-height: 60vh;
-        }
+        /* --- NAVEGAÇÃO MOBILE --- */
+        .mobile-search { padding: 10px 20px; background: white; display: block; }
+        @media(min-width: 768px) { .mobile-search { display: none; } }
+        .mobile-search input { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd; }
 
-        .section {
-            display: none; /* Esconde todas as seções por padrão */
-            animation: fadeIn 0.5s ease;
-        }
-
-        .section.active {
-            display: block; /* Mostra a seção ativa */
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h2.section-title {
+        /* --- HERO BANNER --- */
+        .hero {
+            background: linear-gradient(rgba(216, 27, 96, 0.1), rgba(216, 27, 96, 0.05));
             text-align: center;
-            margin: 30px 0;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+        }
+        .hero h1 { color: var(--primary); margin-bottom: 10px; }
+
+        /* --- PRODUTOS --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            border-left: 5px solid var(--primary);
+            padding-left: 15px;
+            color: #333;
         }
 
-        /* --- GRID DE PRODUTOS --- */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 25px;
         }
 
         .product-card {
             background: white;
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
-            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
             display: flex;
             flex-direction: column;
+            border: 1px solid #eee;
         }
 
         .product-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
-        .product-img {
-            height: 250px;
-            background-color: #eee;
+        .p-img-container {
+            height: 220px;
+            background: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .p-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Garante que a foto preencha sem distorcer */
+            transition: 0.3s;
+        }
+
+        .product-card:hover .p-img-container img { transform: scale(1.05); }
+
+        .p-info { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; }
+        .p-cat { color: #888; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        .p-name { font-weight: 600; font-size: 1rem; margin-bottom: 10px; line-height: 1.4; color: #333; }
+        .p-price { font-size: 1.3rem; color: var(--primary); font-weight: 700; margin-top: auto; }
+        
+        .btn-add {
+            width: 100%;
+            padding: 12px;
+            background: var(--text);
+            color: white;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 15px;
+            border-radius: 6px;
+        }
+        
+        .btn-add:hover { background: var(--primary); }
+
+        /* --- DETALHES DO PRODUTO (MODAL/PÁGINA) --- */
+        #product-detail {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white;
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .detail-wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-top: 40px;
+        }
+
+        .detail-header { display: flex; align-items: center; margin-bottom: 20px; cursor: pointer; color: #666; }
+        .detail-content { display: flex; flex-wrap: wrap; gap: 40px; }
+        
+        .d-img { flex: 1; min-width: 300px; }
+        .d-img img { width: 100%; border-radius: 10px; }
+        
+        .d-info { flex: 1; min-width: 300px; }
+        .d-title { font-size: 2rem; margin-bottom: 10px; color: var(--text); }
+        .d-price { font-size: 2.5rem; color: var(--primary); font-weight: 700; margin-bottom: 20px; }
+        .d-desc { line-height: 1.6; color: #555; white-space: pre-line; margin-bottom: 30px; }
+
+        /* --- CARRINHO LATERAL --- */
+        #cart-sidebar {
+            position: fixed;
+            top: 0; right: -400px;
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            background: white;
+            z-index: 3000;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            transition: 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #cart-sidebar.open { right: 0; }
+        
+        .cart-header {
+            padding: 20px;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .cart-body { flex: 1; overflow-y: auto; padding: 20px; }
+        
+        .cart-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+            animation: fadeIn 0.3s;
+        }
+
+        .cart-item img { width: 70px; height: 70px; object-fit: cover; border-radius: 6px; }
+        .cart-info { flex: 1; }
+        .cart-title { font-size: 0.9rem; font-weight: 600; margin-bottom: 5px; }
+        .cart-price { color: var(--primary); font-weight: bold; }
+        
+        .cart-controls { display: flex; align-items: center; gap: 10px; margin-top: 5px; }
+        .qty-btn { width: 25px; height: 25px; border-radius: 50%; border: 1px solid #ddd; background: white; cursor: pointer; }
+        .trash { color: red; margin-left: auto; cursor: pointer; }
+
+        .cart-footer { padding: 20px; background: #fff; border-top: 1px solid #eee; }
+        .total-row { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; }
+        
+        .btn-checkout {
+            width: 100%;
+            padding: 15px;
+            background: #25D366;
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-        }
-        
-        .product-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .product-info {
-            padding: 15px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .product-name {
-            font-size: 1.1em;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .product-category {
-            font-size: 0.8em;
-            color: #888;
-            margin-bottom: 10px;
-        }
-
-        .product-price {
-            color: var(--primary);
-            font-size: 1.2em;
-            font-weight: bold;
-        }
-
-        /* --- PÁGINA DE DETALHES --- */
-        .detail-view {
-            display: flex;
-            gap: 40px;
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            flex-wrap: wrap;
-        }
-
-        .detail-img {
-            flex: 1;
-            min-width: 300px;
-            height: 400px;
-            background-color: #eee;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .detail-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .detail-info {
-            flex: 1;
-            min-width: 300px;
-        }
-
-        .back-btn {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: var(--text);
-            text-decoration: none;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .detail-price {
-            font-size: 2em;
-            color: var(--primary);
-            font-weight: bold;
-            margin: 20px 0;
-        }
-
-        .detail-desc {
-            line-height: 1.6;
-            margin-bottom: 30px;
-            color: #555;
-            white-space: pre-line; /* Respeita as quebras de linha */
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 15px 30px;
-            border: none;
-            border-radius: 30px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s;
-            flex: 1;
-            text-align: center;
-        }
-
-        .btn:active { transform: scale(0.98); }
-
-        .btn-primary {
-            background-color: #25D366; /* Cor WhatsApp */
-            color: white;
-        }
-
-        .btn-secondary {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        /* --- CARRINHO --- */
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: white;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-
-        .cart-controls {
-            display: flex;
-            align-items: center;
             gap: 10px;
         }
-
-        .qty-btn {
-            width: 30px;
-            height: 30px;
-            background: #eee;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .trash-btn {
-            background: none;
-            border: none;
-            color: red;
-            cursor: pointer;
-            font-size: 1.2em;
-            margin-left: 10px;
-        }
         
-        .empty-msg {
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 2500; display: none;
+        }
+        .overlay.active { display: block; }
+
+        /* --- TOAST NOTIFICATION --- */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
             text-align: center;
-            padding: 50px;
-            color: #888;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 4000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 17px;
+            border-radius: 50px;
         }
 
-        /* --- RESPONSIVIDADE --- */
-        @media (max-width: 768px) {
-            .header-content { flex-direction: column; }
-            .search-bar { width: 100%; max-width: none; }
-            nav ul { font-size: 0.9em; gap: 15px; }
-            .detail-view { flex-direction: column; padding: 20px; }
-        }
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Ajuste Página Dúvidas */
+        .faq-item { background: white; padding: 15px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #eee; }
+        .faq-q { font-weight: bold; color: var(--primary); margin-bottom: 5px; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="top-bar">Enviamos para todo o Brasil! ✨</div>
-        <div class="header-content">
-            <div class="logo" onclick="app.router('home')">Cintia Makess</div>
+        <div class="top-bar">🚚 Frete grátis para Sorocaba nas compras acima de R$ 100,00!</div>
+        <div class="nav-container">
+            <div class="logo" onclick="app.goHome()">Cintia Makess</div>
             
-            <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="O que você procura hoje?">
-                <button onclick="app.searchProducts()">🔍</button>
+            <div class="search-box">
+                <input type="text" id="desktopSearch" placeholder="Buscar produtos..." onkeyup="app.search(this.value)">
             </div>
 
-            <nav>
-                <ul>
-                    <li><a onclick="app.router('home')">Início</a></li>
-                    <li><a onclick="app.router('products')">Produtos</a></li>
-                    <li><a onclick="app.router('cart')">Carrinho (<span id="cartCount">0</span>)</a></li>
-                    <li><a onclick="app.router('faq')">Dúvidas</a></li>
-                </ul>
-            </nav>
+            <div class="nav-icons">
+                <div class="icon-btn" onclick="app.goHome()" title="Home"><span class="material-icons">home</span></div>
+                <div class="icon-btn" onclick="app.showFaq()" title="Dúvidas"><span class="material-icons">help_outline</span></div>
+                <div class="icon-btn" onclick="app.toggleCart()" title="Carrinho">
+                    <span class="material-icons">shopping_bag</span>
+                    <div class="badge" id="cart-count">0</div>
+                </div>
+            </div>
+        </div>
+        <div class="mobile-search">
+            <input type="text" id="mobileSearch" placeholder="O que você procura?" onkeyup="app.search(this.value)">
         </div>
     </header>
 
-    <main class="container">
+    <main id="home-view">
+        <section class="hero">
+            <h1>Realce sua beleza ✨</h1>
+            <p>Os melhores produtos com preços incríveis.</p>
+        </section>
 
-        <section id="home" class="section active">
-            <h2 class="section-title">✨ Destaques da Semana ✨</h2>
-            <div id="featured-products" class="products-grid">
+        <section class="container">
+            <h2 class="section-title">Nossos Produtos</h2>
+            <div class="products-grid" id="products-list">
                 </div>
-            <div style="text-align: center; margin-top: 40px;">
-                <button class="btn btn-secondary" style="max-width: 200px;" onclick="app.router('products')">Ver Todos os Produtos</button>
+        </section>
+    </main>
+
+    <main id="faq-view" class="container" style="display: none; padding-top: 30px;">
+        <h2 class="section-title">Dúvidas Frequentes</h2>
+        <div class="faq-item">
+            <div class="faq-q">Como eu pago?</div>
+            <div class="faq-a">O pagamento é combinado diretamente no WhatsApp após finalizar o pedido (Pix ou Cartão).</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Faz entrega?</div>
+            <div class="faq-a">Sim! Entregamos em toda a região. Consulte a taxa no fechamento.</div>
+        </div>
+        <button class="btn-add" onclick="app.goHome()" style="width: auto; padding: 10px 30px;">Voltar as Compras</button>
+    </main>
+
+    <div id="product-detail">
+        <div class="detail-wrapper">
+            <div class="detail-header" onclick="app.closeDetail()">
+                <span class="material-icons">arrow_back</span> &nbsp; Voltar para loja
             </div>
-        </section>
-
-        <section id="products" class="section">
-            <h2 class="section-title">Nossa Coleção</h2>
-            <div id="all-products" class="products-grid">
-                </div>
-        </section>
-
-        <section id="detail" class="section">
-            <div class="detail-view">
-                <div class="detail-img" id="detail-img"></div>
-                <div class="detail-info">
-                    <div class="back-btn" onclick="window.history.back()">← Voltar</div>
-                    <h1 id="detail-name">Nome do Produto</h1>
-                    <p id="detail-category" class="product-category">Categoria</p>
-                    <div id="detail-price" class="detail-price">R$ 0,00</div>
-                    <p id="detail-desc" class="detail-desc">Descrição...</p>
-                    
-                    <div class="action-buttons">
-                        <button class="btn btn-primary" onclick="app.buyNow()">Comprar Agora (WhatsApp)</button>
-                        <button class="btn btn-secondary" onclick="app.continueShopping()">Continuar Comprando</button>
+            <div class="detail-content">
+                <div class="d-img" id="detail-img"></div>
+                <div class="d-info">
+                    <h1 class="d-title" id="detail-title"></h1>
+                    <div class="d-price" id="detail-price"></div>
+                    <p class="d-desc" id="detail-desc"></p>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn-add" id="detail-btn-add" style="margin: 0; flex: 2;">ADICIONAR AO CARRINHO</button>
+                        <button class="btn-checkout" onclick="app.toggleCart()" style="margin: 0; flex: 1; background: var(--text);">VER CARRINHO</button>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
 
-        <section id="cart" class="section">
-            <h2 class="section-title">Seu Carrinho</h2>
-            <div id="cart-items">
-                </div>
-            <div id="cart-total" style="text-align: right; font-size: 1.5em; margin-top: 20px; font-weight: bold;">
-                Total: R$ 0,00
+    <div class="overlay" id="overlay" onclick="app.toggleCart()"></div>
+    <div id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Seu Carrinho</h3>
+            <span class="material-icons" onclick="app.toggleCart()" style="cursor: pointer;">close</span>
+        </div>
+        <div class="cart-body" id="cart-items">
+            <div style="text-align: center; color: #999; margin-top: 50px;">Seu carrinho está vazio 🛍️</div>
+        </div>
+        <div class="cart-footer">
+            <div class="total-row">
+                <span>Total:</span>
+                <span id="cart-total">R$ 0,00</span>
             </div>
-             <div style="text-align: right; margin-top: 20px;">
-                <button class="btn btn-primary" style="max-width: 300px;" onclick="app.checkoutAll()">Finalizar Pedido no WhatsApp</button>
-            </div>
-        </section>
+            <button class="btn-checkout" onclick="app.checkout()">
+                <span class="material-icons">whatsapp</span> FINALIZAR COMPRA
+            </button>
+        </div>
+    </div>
 
-        <section id="faq" class="section">
-            <h2 class="section-title">Dúvidas Frequentes</h2>
-            <p style="text-align: center;">Entre em contato conosco pelo WhatsApp para suporte imediato.</p>
-        </section>
-
-    </main>
+    <div id="toast">Produto adicionado!</div>
 
     <script>
-        // --- DADOS DOS PRODUTOS ---
-        // OBS: Substitua "https://placehold.co/400" pelos links reais das suas fotos ou nomes dos arquivos.
-        const dbProducts = [
+        // --- DADOS REAIS (Coloque suas fotos na pasta e altere os nomes em 'img') ---
+        const products = [
             {
                 id: 1,
                 name: "Água Micelar de Camomila - Super Poderes (120ml)",
                 price: 10.00,
-                category: "Skincare / Cuidados Faciais",
-                img: "https://placehold.co/400?text=Agua+Micelar", 
-                desc: "Sua pele merece um momento de calma e limpeza profunda!\n\nA Água Micelar de Camomila da Super Poderes é o item essencial para a sua rotina diária. Com uma fórmula leve e enriquecida com Extrato de Camomila, ela não apenas remove a maquiagem e as impurezas, mas também acalma e suaviza a pele.\n\nPor que você vai amar?\n• Multifuncional\n• Ação Calmante\n• Praticidade"
+                cat: "Skincare",
+                img: "https://placehold.co/600x600/png?text=Agua+Micelar", // Troque por 'agua-micelar.jpg'
+                desc: "Sua pele merece um momento de calma e limpeza profunda!\n\nA Água Micelar de Camomila da Super Poderes é o item essencial para a sua rotina diária. Com uma fórmula leve e enriquecida com Extrato de Camomila, ela não apenas remove a maquiagem e as impurezas, mas também acalma e suaviza a pele.\n\n• Multifuncional\n• Ação Calmante\n• Praticidade"
             },
             {
                 id: 2,
                 name: "Base Líquida Facial 4 Angels",
-                price: 25.00, // Ajustei para preço de venda estimado, pois R$10 era custo
-                category: "Maquiagem",
-                img: "https://placehold.co/400?text=Base+4Angels",
-                desc: "Conquiste uma pele impecável e com acabamento profissional!\n\nA Base Líquida 4 Angels foi desenvolvida para quem busca cobertura e naturalidade em um só produto. Sua textura leve permite uma aplicação uniforme, disfarçando imperfeições.\n\nDestaques:\n• Textura Fluida\n• Embalagem com Pump\n• Acabamento Natural"
+                price: 25.00,
+                cat: "Maquiagem",
+                img: "https://placehold.co/600x600/png?text=Base+4Angels", // Troque por 'base-4angels.jpg'
+                desc: "Conquiste uma pele impecável e com acabamento profissional!\n\nA Base Líquida 4 Angels foi desenvolvida para quem busca cobertura e naturalidade em um só produto. Sua textura leve permite uma aplicação uniforme.\n\n• Textura Fluida\n• Embalagem com Pump\n• Acabamento Natural"
             },
             {
                 id: 3,
-                name: "Base Matte de Alta Cobertura - Femme Paris (45ml)",
-                price: 25.00, // Ajustei para preço de venda estimado
-                category: "Maquiagem",
-                img: "https://placehold.co/400?text=Base+Femme",
-                desc: "Pele de porcelana com resistência total!\n\nA Base Matte Femme Paris é a escolha ideal para quem não abre mão de uma pele impecável e com alta performance.\n\nPrincipais Benefícios:\n• À Prova d’Água\n• Efeito Matte\n• Alta Cobertura\n• Embalagem Econômica"
+                name: "Base Matte Alta Cobertura - Femme Paris (45ml)",
+                price: 20.00,
+                cat: "Maquiagem",
+                img: "https://placehold.co/600x600/png?text=Base+Femme", // Troque por 'base-femme.jpg'
+                desc: "Pele de porcelana com resistência total!\n\nA Base Matte Femme Paris é a escolha ideal para quem não abre mão de uma pele impecável e com alta performance.\n\n• À Prova d’Água\n• Efeito Matte\n• Alta Cobertura"
             },
             {
                 id: 4,
                 name: "Kit Bobbie Goods: 5 Cards + Canetinhas",
                 price: 10.00,
-                category: "Acessórios / Papelaria",
-                img: "https://placehold.co/400?text=Kit+Bobbie+Goods",
-                desc: "Liberte a criatividade com o charme de Bobbie Goods!\n\nEste kit é perfeito para quem ama o universo fofo e relaxante de Bobbie Goods. Ideal para crianças e adultos.\n\nO que vem no kit:\n• 5 Cards Exclusivos\n• Conjunto de Canetinhas\n• Praticidade (Embalagem pouch)"
+                cat: "Papelaria",
+                img: "https://placehold.co/600x600/png?text=Kit+Bobbie", // Troque por 'kit-bobbie.jpg'
+                desc: "Liberte a criatividade com o charme de Bobbie Goods!\n\nEste kit é perfeito para quem ama o universo fofo e relaxante de Bobbie Goods. Ideal para crianças e adultos.\n\n• 5 Cards Exclusivos\n• Conjunto de Canetinhas\n• Praticidade (Pouch)"
             },
             {
                 id: 5,
-                name: "Blush Líquido Toque Special – Cores Vibrantes",
+                name: "Blush Líquido Toque Special",
                 price: 10.00,
-                category: "Maquiagem",
-                img: "https://placehold.co/400?text=Blush+Liquido",
-                desc: "Dê um ar de saúde e vivacidade ao seu rosto com o Blush Líquido Toque Special!\n\nEste blush líquido é o segredo para aquela maquiagem com aspecto natural e radiante que dura o dia todo.\n\nPor que você vai amar?\n• Alta Pigmentação\n• Textura Fluida\n• Acabamento Natural"
+                cat: "Maquiagem",
+                img: "https://placehold.co/600x600/png?text=Blush+Liquido", // Troque por 'blush.jpg'
+                desc: "Dê um ar de saúde e vivacidade ao seu rosto!\n\nEste blush líquido é o segredo para aquela maquiagem com aspecto natural e radiante que dura o dia todo.\n\n• Alta Pigmentação\n• Textura Fluida\n• Acabamento Natural"
             }
         ];
 
-        // --- LÓGICA DO APP ---
+        // --- SISTEMA DA LOJA ---
         const app = {
-            cart: [],
-            currentProduct: null,
-            whatsappNumber: "5515974072640",
+            cart: JSON.parse(localStorage.getItem('cintiaCart')) || [],
+            whatsapp: "5515974072640",
 
             init: () => {
-                app.renderProducts(dbProducts, 'featured-products', 3); // Destaques
-                app.renderProducts(dbProducts, 'all-products'); // Todos
-                
-                // Pesquisa Dinâmica
-                document.getElementById('searchInput').addEventListener('keyup', (e) => {
-                    const term = e.target.value.toLowerCase();
-                    const filtered = dbProducts.filter(p => p.name.toLowerCase().includes(term));
-                    app.renderProducts(filtered, 'all-products');
-                    if(term.length > 0 && document.getElementById('products').style.display === 'none') {
-                        app.router('products');
-                    }
-                });
+                app.renderProducts(products);
+                app.updateCartCount();
+                app.renderCart();
             },
 
-            // Navegação entre "Páginas"
-            router: (pageName) => {
-                document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
-                
-                if (pageName === 'detail') {
-                    document.getElementById('detail').classList.add('active');
-                } else if (pageName === 'cart') {
-                    document.getElementById('cart').classList.add('active');
-                    app.renderCart();
-                } else {
-                    document.getElementById(pageName).classList.add('active');
-                    // Salva histórico para botão voltar funcionar no detalhe
-                    if(pageName !== 'detail') window.history.pushState({page: pageName}, "", `#${pageName}`);
-                }
-                window.scrollTo(0, 0);
-            },
-
-            // Renderizar Cards de Produtos
-            renderProducts: (products, containerId, limit = null) => {
-                const container = document.getElementById(containerId);
-                container.innerHTML = '';
-                
-                const list = limit ? products.slice(0, limit) : products;
-
-                list.forEach(p => {
-                    const card = document.createElement('div');
-                    card.className = 'product-card';
-                    card.onclick = () => app.openProduct(p.id);
-                    card.innerHTML = `
-                        <div class="product-img">
+            // Renderizar Produtos
+            renderProducts: (list) => {
+                const container = document.getElementById('products-list');
+                container.innerHTML = list.map(p => `
+                    <div class="product-card" onclick="app.openDetail(${p.id})">
+                        <div class="p-img-container">
                             <img src="${p.img}" alt="${p.name}">
                         </div>
-                        <div class="product-info">
-                            <div>
-                                <h3 class="product-name">${p.name}</h3>
-                                <p class="product-category">${p.category}</p>
-                            </div>
-                            <div class="product-price">R$ ${p.price.toFixed(2).replace('.', ',')}</div>
+                        <div class="p-info">
+                            <span class="p-cat">${p.cat}</span>
+                            <div class="p-name">${p.name}</div>
+                            <div class="p-price">R$ ${p.price.toFixed(2).replace('.',',')}</div>
+                            <button class="btn-add" onclick="event.stopPropagation(); app.addToCart(${p.id})">
+                                COMPRAR
+                            </button>
                         </div>
-                    `;
-                    container.appendChild(card);
-                });
+                    </div>
+                `).join('');
             },
 
-            // Abrir Página de Detalhe
-            openProduct: (id) => {
-                const p = dbProducts.find(x => x.id === id);
-                app.currentProduct = p;
+            // Busca
+            search: (term) => {
+                const filtered = products.filter(p => p.name.toLowerCase().includes(term.toLowerCase()));
+                app.renderProducts(filtered);
+                app.goHome(); // Garante que volta pra home se tiver em outra tela
+            },
 
-                document.getElementById('detail-name').innerText = p.name;
-                document.getElementById('detail-category').innerText = p.category;
-                document.getElementById('detail-price').innerText = `R$ ${p.price.toFixed(2).replace('.', ',')}`;
+            // Detalhes
+            openDetail: (id) => {
+                const p = products.find(x => x.id === id);
+                document.getElementById('detail-img').innerHTML = `<img src="${p.img}">`;
+                document.getElementById('detail-title').innerText = p.name;
+                document.getElementById('detail-price').innerText = `R$ ${p.price.toFixed(2).replace('.',',')}`;
                 document.getElementById('detail-desc').innerText = p.desc;
-                document.getElementById('detail-img').innerHTML = `<img src="${p.img}" alt="${p.name}">`;
+                
+                const btn = document.getElementById('detail-btn-add');
+                btn.onclick = () => { app.addToCart(p.id); app.closeDetail(); };
 
-                app.router('detail');
+                document.getElementById('product-detail').style.display = 'block';
+                document.body.style.overflow = 'hidden'; // Trava rolagem do fundo
             },
 
-            // Botão "Comprar Agora" (WhatsApp Direto)
-            buyNow: () => {
-                if(!app.currentProduct) return;
-                const p = app.currentProduct;
-                const text = `Olá Cintia! 👋\n\nGostaria de comprar o produto: *${p.name}* (R$ ${p.price.toFixed(2)}).\n\nGostaria de fazer uma reserva, você tem disponibilidade?`;
-                const url = `https://wa.me/${app.whatsappNumber}?text=${encodeURIComponent(text)}`;
-                window.open(url, '_blank');
+            closeDetail: () => {
+                document.getElementById('product-detail').style.display = 'none';
+                document.body.style.overflow = 'auto';
             },
 
-            // Botão "Continuar Comprando" (Adiciona ao Carrinho e vai para Produtos)
-            continueShopping: () => {
-                if(!app.currentProduct) return;
-                app.addToCart(app.currentProduct.id);
-                app.router('products');
-            },
-
-            // Adicionar ao Carrinho
+            // Carrinho
             addToCart: (id) => {
                 const existing = app.cart.find(item => item.id === id);
                 if(existing) {
@@ -560,118 +514,126 @@
                 } else {
                     app.cart.push({ id: id, qty: 1 });
                 }
+                app.saveCart();
+                app.showToast("Adicionado ao carrinho! 💖");
+            },
+
+            removeFromCart: (id) => {
+                app.cart = app.cart.filter(x => x.id !== id);
+                app.saveCart();
+            },
+
+            changeQty: (id, delta) => {
+                const item = app.cart.find(x => x.id === id);
+                if(item) {
+                    item.qty += delta;
+                    if(item.qty <= 0) {
+                        if(confirm("Remover este item?")) app.removeFromCart(id);
+                        else item.qty = 1;
+                    }
+                    app.saveCart();
+                }
+            },
+
+            saveCart: () => {
+                localStorage.setItem('cintiaCart', JSON.stringify(app.cart));
                 app.updateCartCount();
-                // Feedback visual simples
-                alert("Produto adicionado ao carrinho!"); 
+                app.renderCart();
             },
 
             updateCartCount: () => {
-                const total = app.cart.reduce((acc, item) => acc + item.qty, 0);
-                document.getElementById('cartCount').innerText = total;
+                const count = app.cart.reduce((acc, item) => acc + item.qty, 0);
+                document.getElementById('cart-count').innerText = count;
             },
 
-            // Renderizar Tela do Carrinho
+            toggleCart: () => {
+                const sidebar = document.getElementById('cart-sidebar');
+                const overlay = document.getElementById('overlay');
+                if(sidebar.classList.contains('open')) {
+                    sidebar.classList.remove('open');
+                    overlay.classList.remove('active');
+                } else {
+                    sidebar.classList.add('open');
+                    overlay.classList.add('active');
+                    app.renderCart();
+                }
+            },
+
             renderCart: () => {
                 const container = document.getElementById('cart-items');
-                container.innerHTML = '';
-                let totalPrice = 0;
-
-                if(app.cart.length === 0) {
-                    container.innerHTML = '<div class="empty-msg">Seu carrinho está vazio 🛍️</div>';
-                    document.getElementById('cart-total').innerText = 'Total: R$ 0,00';
-                    return;
-                }
-
-                app.cart.forEach(item => {
-                    const product = dbProducts.find(p => p.id === item.id);
-                    totalPrice += product.price * item.qty;
-
-                    const div = document.createElement('div');
-                    div.className = 'cart-item';
-                    div.innerHTML = `
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <img src="${product.img}" style="width:50px; height:50px; object-fit:cover; border-radius:5px;">
-                            <div>
-                                <b>${product.name}</b><br>
-                                <small>R$ ${product.price.toFixed(2).replace('.', ',')}</small>
-                            </div>
-                        </div>
-                        <div class="cart-controls">
-                            <button class="qty-btn" onclick="app.changeQty(${item.id}, -1)">-</button>
-                            <span>${item.qty}</span>
-                            <button class="qty-btn" onclick="app.changeQty(${item.id}, 1)">+</button>
-                            <button class="trash-btn" onclick="app.deleteFromCart(${item.id})">🗑️</button>
-                        </div>
-                    `;
-                    container.appendChild(div);
-                });
-
-                document.getElementById('cart-total').innerText = `Total: R$ ${totalPrice.toFixed(2).replace('.', ',')}`;
-            },
-
-            // Lógica de alterar quantidade (- ou +)
-            changeQty: (id, delta) => {
-                const item = app.cart.find(x => x.id === id);
-                if(!item) return;
-
-                if (delta === 1) {
-                    item.qty++;
-                } else if (delta === -1) {
-                    if (item.qty > 1) {
-                        item.qty--;
-                    } else {
-                        // Tentar diminuir quando é 1: Perguntar se quer excluir
-                        if(confirm("Deseja excluir este produto do carrinho?")) {
-                            app.deleteFromCart(id);
-                            return; // Sai da função pois já deletou
-                        } else {
-                            return; // Cancelar, não faz nada
-                        }
-                    }
-                }
-                app.renderCart();
-                app.updateCartCount();
-            },
-
-            // Lixeira (Excluir direto)
-            deleteFromCart: (id) => {
-                app.cart = app.cart.filter(x => x.id !== id);
-                app.renderCart();
-                app.updateCartCount();
-            },
-
-            // Finalizar Pedido do Carrinho Completo
-            checkoutAll: () => {
-                if(app.cart.length === 0) return alert("Carrinho vazio!");
+                let total = 0;
                 
-                let msg = "Olá Cintia! 👋\n\nGostaria de fechar o pedido do meu carrinho:\n\n";
+                if(app.cart.length === 0) {
+                    container.innerHTML = '<div style="text-align: center; color: #999; margin-top: 50px;">Seu carrinho está vazio 🛍️</div>';
+                } else {
+                    container.innerHTML = app.cart.map(item => {
+                        const p = products.find(x => x.id === item.id);
+                        total += p.price * item.qty;
+                        return `
+                            <div class="cart-item">
+                                <img src="${p.img}">
+                                <div class="cart-info">
+                                    <div class="cart-title">${p.name}</div>
+                                    <div class="cart-price">R$ ${(p.price * item.qty).toFixed(2).replace('.',',')}</div>
+                                    <div class="cart-controls">
+                                        <button class="qty-btn" onclick="app.changeQty(${item.id}, -1)">-</button>
+                                        <span>${item.qty}</span>
+                                        <button class="qty-btn" onclick="app.changeQty(${item.id}, 1)">+</button>
+                                        <span class="material-icons trash" onclick="app.removeFromCart(${item.id})">delete</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+                document.getElementById('cart-total').innerText = `R$ ${total.toFixed(2).replace('.',',')}`;
+            },
+
+            // Navegação Simples
+            goHome: () => {
+                document.getElementById('home-view').style.display = 'block';
+                document.getElementById('faq-view').style.display = 'none';
+                app.closeDetail();
+                const sidebar = document.getElementById('cart-sidebar');
+                if(sidebar.classList.contains('open')) app.toggleCart();
+                window.scrollTo(0,0);
+            },
+
+            showFaq: () => {
+                document.getElementById('home-view').style.display = 'none';
+                document.getElementById('faq-view').style.display = 'block';
+                app.closeDetail();
+            },
+
+            showToast: (msg) => {
+                const x = document.getElementById("toast");
+                x.innerText = msg;
+                x.className = "show";
+                setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            },
+
+            // FINALIZAR PEDIDO NO WHATSAPP
+            checkout: () => {
+                if(app.cart.length === 0) return alert("Adicione produtos primeiro! 😊");
+
+                let msg = `Olá Cintia! 👋\nQuero finalizar meu pedido:\n\n`;
                 let total = 0;
 
                 app.cart.forEach(item => {
-                    const p = dbProducts.find(x => x.id === item.id);
+                    const p = products.find(x => x.id === item.id);
                     const subtotal = p.price * item.qty;
                     total += subtotal;
-                    msg += `• ${item.qty}x ${p.name} (R$ ${subtotal.toFixed(2)})\n`;
+                    msg += `▪️ ${item.qty}x ${p.name}\n`;
                 });
 
-                msg += `\n*Total Geral: R$ ${total.toFixed(2)}*\n\nGostaria de confirmar a disponibilidade.`;
+                msg += `\n💰 *Total: R$ ${total.toFixed(2).replace('.',',')}*\n\nPodemos combinar o pagamento e entrega?`;
                 
-                const url = `https://wa.me/${app.whatsappNumber}?text=${encodeURIComponent(msg)}`;
-                window.open(url, '_blank');
+                const link = `https://wa.me/${app.whatsapp}?text=${encodeURIComponent(msg)}`;
+                window.open(link, '_blank');
             }
         };
 
-        // Iniciar
         app.init();
-        
-        // Suporte ao botão de voltar do navegador
-        window.onpopstate = (event) => {
-            if(event.state && event.state.page) {
-                app.router(event.state.page);
-            } else {
-                app.router('home');
-            }
-        };
     </script>
 </body>
 </html>
